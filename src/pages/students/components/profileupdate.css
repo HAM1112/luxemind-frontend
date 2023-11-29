@@ -1,0 +1,5 @@
+.image-upload{
+    box-shadow: 0 0 20px 0 rgba(255,255,255,.35);
+    background-color:rgba(0, 0, 0, 0.2);
+    transition: ease 1s;
+}
