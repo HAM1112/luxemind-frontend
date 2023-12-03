@@ -1,9 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeTokens } from '../../redux/slices/tokenSlice'
+import { removeUserDetails } from '../../redux/slices/userSlice'
 
 function Profile() {
     
     const userDetails = useSelector(state => state.user.value)
+    const dispatch = useDispatch()
+    const handleLogout = () => {
+        dispatch(removeTokens())
+        dispatch(removeUserDetails())
+    }
 
   return (
     <div className="w-full border-4 border-sky-500 p-8">
@@ -30,7 +37,8 @@ function Profile() {
             </div>
         </div>
         <div className='flex justify-start gap-8 mt-10 px-1'>
-            <button className='bg-zinc-900 text-white py-2 px-5 rounded border-4 hover:border-double' >Logout</button>
+            <button className='bg-zinc-900 text-white py-2 px-5 rounded border-4 hover:border-double' 
+            onClick={handleLogout}>Logout</button>
             <button className='bg-red-700 text-white py-2 px-5 rounded border-4 hover:border-double'>Delete Account</button>
         </div>
     </div>
