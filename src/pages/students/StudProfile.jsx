@@ -84,18 +84,18 @@ function StudProfile() {
                     </div>
                     <div className='mt-10 w-full flex justify-end gap-6'>
                         <button 
-                            className='bg-blue-600 px-3 text-white py-1 shadow-xl rounded hover:bg-blue-700 hover:shadow-2xl'
+                            className='button-54 edit'
                             onClick={()=>{setModal(true)}}
                             >
                             Edit
                         </button>
                         <button 
-                            className='bg-red-600 px-3 text-white py-1 shadow-xl rounded hover:bg-red-700 hover:shadow-2xl'
+                            className='button-54 bg-red-500'
                             >
                             Delete
                         </button>
                         <button 
-                            className='bg-slate-600 px-3 text-white py-1 shadow-xl rounded hover:bg-slate-700 hover:shadow-2xl'
+                            className='button-54 logout'
                             onClick={handleLogout}
                             >
                             Logout
@@ -107,7 +107,7 @@ function StudProfile() {
         }
 
                     
-        {loading ? null : (modal &&  <div className='profile-update rounded border-2 border-green-400 shadow-xl'><ProfileUpdate userDetails={user} getData={getData} getModal={getModal} /></div>) }
+        {loading ? null : (modal &&  <div className='profile-update rounded border-4 border-black'><ProfileUpdate userDetails={user} getData={getData} getModal={getModal} /></div>) }
 
                 
         </>
