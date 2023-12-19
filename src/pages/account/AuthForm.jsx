@@ -9,7 +9,10 @@ import StudRegister from './StudRegister';
 
 
 function AuthForm() {
-
+  const [isLogin, setIsLogin] = useState(true);
+  useEffect(() => {
+   
+  }, [isLogin]);
   return (
     <div className='login flex justify-evenly h-screen border'>
       <div className='left w-3/4'>
@@ -23,8 +26,14 @@ function AuthForm() {
       <div className='right w-full'>
             <div className='grid justify-center content-start h-full pt-20' >
                 <div className='flex w-50'>
-                    <div className='border-b-2 border-slate-400 px-2 py-1 w-full hover:border-slate-700' ><NavLink to={'login'}>Sign In</NavLink></div>
-                    <div className='border-b-2 border-slate-400 px-2 py-1 w-full hover:border-slate-700' ><NavLink to={'register'}>Register</NavLink></div>
+                    <div onClick={()=>{setIsLogin(true)}}
+                      className={isLogin ? 'border-b-2 border-slate-700 px-2 py-1 w-full ' : 'border-b-2 border-slate-400 px-2 py-1 w-full hover:border-slate-700' } >
+                        <NavLink to={'login'}>Sign In</NavLink>
+                    </div>
+                    <div onClick={()=>{setIsLogin(false)}}
+                      className={isLogin ? 'border-b-2 border-slate-400 px-2 py-1 w-full hover:border-slate-700' : 'border-b-2 border-slate-700 px-2 py-1 w-full ' } >
+                        <NavLink to={'register'}>Register</NavLink>
+                    </div>
                 </div> 
                 <Outlet />
             </div>

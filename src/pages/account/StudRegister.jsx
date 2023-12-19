@@ -5,7 +5,7 @@ import api from '../../api/api';
 
 function StudRegister() {
 
-  const [Data, setData] = useState({first_name:"" ,last_name : "", age:null, email:"" , password : "" , username:""});
+  const [Data, setData] = useState({ email:"" , password : "" , username:""});
     
    
   const handlleSubmit = () => {
@@ -32,12 +32,9 @@ function StudRegister() {
 
   return (
     <>
-      <h1 className='pt-4 text-center'>Register as student</h1>
+ 
       <div className='grid gap-6 pt-5'>
-            <input onChange={handleChange} value={Data.username} type="text" name='username' placeholder='username' className='border border-slate-500 px-4 py-2 w-96'/>
-            <input onChange={handleChange} value={Data.first_name} type="text" name='first_name' placeholder='first_name' className='border border-slate-500 px-4 py-2 w-96'/>
-            <input onChange={handleChange} value={Data.last_name} type="text" name='last_name' placeholder='last_name' className='border border-slate-500 px-4 py-2 w-96'/>
-            <input onChange={handleChange} value={Data.age} type="number" name='age' placeholder='Age' className='border border-slate-500 px-4 py-2 w-96'/>
+            <input onChange={handleChange} value={Data.username} type="text" name='username' placeholder='Username' className='border border-slate-500 px-4 py-2 w-96'/>
             <input onChange={handleChange} value={Data.email} type="email" name='email' placeholder='Email address' className='border border-slate-500 px-4 py-2 w-96'/>
             <input onChange={handleChange} value={Data.password} type="password" name='password' placeholder='Password'  className='border border-slate-500 px-4 py-2 w-96'/>
         </div>

@@ -1,15 +1,13 @@
 
 import api from '../../api/api';
 import { useState } from 'react';
-
 import './login.css'
 import { addUserDetails } from '../../redux/slices/userSlice';
 import { addTokens } from '../../redux/slices/tokenSlice';
 import {  useDispatch } from 'react-redux';
 import { jwtDecode } from "jwt-decode";
 // import { Navigate } from 'react-router-dom';
-
-
+import { ToastContainer, toast } from 'react-toastify';
 
 const Login = () =>{
 
@@ -27,7 +25,16 @@ const Login = () =>{
             }
         })
         .catch(function (error) {
-            alert("Invalid Credential")
+            toast.error('Invalid Credentials!!!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
             console.log(error);
         });
         setData({email:"" , password : ""})
@@ -38,9 +45,9 @@ const Login = () =>{
     
     return (
         <>
-        {console.log()}
             <div className='grid gap-6 pt-5'>
                 {/* {console.log(testState)} */}
+                <ToastContainer />
                 <input onChange={handleChange} 
                     id='email' 
                     value={Data.email} 
