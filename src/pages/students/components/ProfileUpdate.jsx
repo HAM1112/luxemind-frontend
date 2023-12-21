@@ -6,12 +6,12 @@ import { firebasestore } from '../../../firebase/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import api from '../../../api/api'
 import useUrlHeader from '../../../utilities/urlHeader'
+import {convertToUnderscore} from '../../../utilities/convertToUnderscore'
 
 'use client';
 
 
 function ProfileUpdate(props) {
-    console.log(props.userDetails);
     const [user, setUser] = useState(props.userDetails);
     const [image, setImage] = useState(null);
     const fileInputRef = useRef(null);
@@ -40,7 +40,10 @@ function ProfileUpdate(props) {
             console.log("upload btn");
             return
         }
-        const imgRef = ref(firebasestore,`files/${user.username}`)
+        const newname = convertToUnderscore(user.username)
+
+        console.log(newname);
+        const imgRef = ref(firebasestore,`files/${newname}`)
         uploadBytes(imgRef , image)
         .then((snapshot) => {
                 getDownloadURL(snapshot.ref).then(url => {
@@ -49,19 +52,21 @@ function ProfileUpdate(props) {
                 })
             }).catch(error => {
                 console.log("snapshot error");
-        }).catch(error => {
-            console.log('upload error');
-        })
+            })
+            
         setImage(null)
     } 
 
     const handleSave = () => {
-        console.log(user);
-        // api.put(
-        //     '/student/update-profile',
-        //     header,
-        //     user
-        // )
+        api.put(
+            '/student/update-profile/',
+            user,
+            header
+        ).then(response => {
+
+            props.getModal(false)
+        })
+
     }
 
 
