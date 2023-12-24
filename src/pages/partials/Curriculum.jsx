@@ -6,6 +6,8 @@ import useUrlHeader from '../../utilities/urlHeader'
 import CustomModal from '../customs/CustomModal'
 import AddLesson from '../providers/components/AddLesson'
 import deletePic from '../../assets/delete.png'
+import { Link } from 'react-router-dom'
+
 
 function Curriculum(props) {
     const [module, setModule] = useState('');
@@ -14,10 +16,13 @@ function Curriculum(props) {
     const [curriculum, setCurriculum] = useState([]);
     const [lessonModal, setLessonModal] = useState(false);
     const [moduleId, setModuleId] = useState(null);
-
+    
     const getModal = (bool) => {
         setLessonModal(bool)
     }
+    useEffect(() => {
+        console.log(curriculum);
+    }, [curriculum]);
 
     useEffect(() => {
         api.get(
@@ -31,37 +36,37 @@ function Curriculum(props) {
         })
     }, [lessonModal]);
 
-    useEffect(() => {
-        console.log(curriculum);
-    }, [curriculum]);
-
+    
     const handleAddModule = ()=>{
         console.log(course.id);
         api.post(
             '/provider/addModule/',
             {name : module , course : course.id},
             auth
-        ).then((response)=>{
-            if (response.status === 201) {
-                console.log('Course added Successfully');
-                setCurriculum(curriculum)
-            }else{
-                console.log(response.data);
-            }
-        }).catch((erro)=>{
-            console.log(erro)
-        })
-    }
-
-    const handleDelete = (e) => {
-        const id = e.target.name       
-        api.delete(
+            ).then((response)=>{
+                if (response.status === 201) {
+                    console.log(response.data);
+                    console.log('Course added Successfully');
+                    setCurriculum([...curriculum , response.data])
+                }else{
+                    console.log(response.data);
+                }
+            }).catch((erro)=>{
+                console.log(erro)
+            })
+            setModule('')
+        }
+        
+        const handleDelete = (e) => {
+            const id = e.target.name       
+            api.delete(
             `/provider/delete_module/${id}`,
             auth
             ).then(response => {
                 console.log('Module Deleted successfully');
-                console.log(response.data.message);
-                const newCurriculum = curriculum.filter(item => item.module.id !== id)
+                console.log(curriculum);
+                const newCurriculum = curriculum.filter(item => item.module.id != `${id}`)
+                console.log(newCurriculum);
                 setCurriculum(newCurriculum)
             }).catch(error => {
                 console.log(error);
@@ -75,8 +80,9 @@ function Curriculum(props) {
                 auth
                 ).then(response => {
                     console.log('Module Deleted successfully');
-                    console.log(response.data.message);             
-                    const newCurriculum = curriculum.filter(item => item.lessons.id !== id)
+                    console.log(curriculum);        
+                    const newCurriculum = curriculum.filter(item => item.lessons.id !== `${id}`)
+                    console.log(newCurriculum);
                     setCurriculum(newCurriculum)
                 }).catch(error => {
                     console.log(error);
@@ -105,21 +111,27 @@ function Curriculum(props) {
             {curriculum.map((module , index) => {
                 return (
                     <div key={index}>
-                        <div className='flex items-center pr-4'>
-                            <h1 className='text-[24px] my-4'>{module.module.name}</h1>
+                        <div className='flex items-center pr-4 bg-[#D8DBE1] ps-5 mt-3 rounded'>
+                            <h1 className='text-[24px] my-4 font-semibold'>{module.module.name}</h1>
                             { is_provider ? <button name={module.module.id} onClick={handleDelete} className='ml-0 ml-auto bg-red-500 text-white px-3 rounded py-2'>Delete</button> : null }  
                         </div>
                         {module.lessons.map((lesson , index) => {
                             return (
-                                <div key={lesson.id}>
+                                <div key={lesson.id} >
                                     <div className='flex gap-5 items-center w-full p-4 mt-1 bg-[#f0f4fa]'>
                                         <p className='text-slate-400 font-bold'>{index + 1}</p>
                                         <img src={play} alt="play" className='w-5 h-5'/>
-                                        <h2>{lesson.name}</h2>
+                                        <h2 className='capitazlie'>
+                                            { 
+                                                is_provider ?
+                                                <Link to={`/provider/course/${course.id}/lesson/${lesson.id}`}>{lesson.name}</Link>
+                                                : <>{lesson.name}</>
+                                             }
+                                        </h2>
                                         <div className='flex gap-4 px-2 ml-0 ml-auto'>
                                             <img src={time} alt="time" className='w-5 h-5'/>
                                             <span> {lesson.lesson_duration}</span>
-                                            { is_provider ? <img src={deletePic} onClick={handleLessonDelete} name={lesson.id} className='w-6 h-6 hover:shadow-xl' /> : null }
+                                            { is_provider ? <img src={deletePic} onClick={handleLessonDelete} name={lesson.id} className='cursor-pointer w-6 h-6 hover:shadow-xl' /> : null }
                                         </div>
                                     </div>
                                 </div>
