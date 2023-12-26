@@ -26,7 +26,6 @@ function StudProfile() {
     });
 
     useEffect(() => {
-        console.log('profile')
         api.get(
             '/student/profile',
             {
@@ -35,14 +34,29 @@ function StudProfile() {
                 }
             }
         ).then((response) => {
-            console.log(response.data)
             setUser(response.data)
         })
         .catch((error) => {
             alert('some error has occured')
         })
         setLoading(false)
-    }, []);
+    }, [modal]);
+
+    useEffect(() => {
+        if (
+            user.dob === null ||
+            user.education === '' ||
+            user.first_name === '' ||
+            user.last_name === ''
+        ){
+            // lo
+            const button = document.getElementById('student-profile-edit')
+            if(button){
+                button.click()
+            }
+        }
+
+    }, [user]);
 
     const covertToDate = (val) => {
         const dateObject = new Date(val);
@@ -72,7 +86,7 @@ function StudProfile() {
                     <div className='relative'>
                         <div className='h-36 w-full overflow-hidden'>
                             <img src={banner} alt="" />
-                            <img src={accoPic} alt="" className='absolute top-10 left-5 rounded-full w-48 shadow-xl'/>
+                            <img src={user.avatar ? user.avatar : accoPic} alt="" className='absolute w-48 h-48 top-10 left-5 rounded-full w-48 shadow-xl'/>
                         </div>
                     </div>
                     <div className='mt-28'>
@@ -86,6 +100,7 @@ function StudProfile() {
                         <button 
                             className='button-54 edit'
                             onClick={()=>{setModal(true)}}
+                            id="student-profile-edit"
                             >
                             Edit
                         </button>
