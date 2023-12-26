@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate, } from 'react-router-dom'
 import './App.css'
-
 import AuthForm from './pages/account/AuthForm'
 import AdminHome from './pages/adminpanel/AdminHome'
 import Dashboard from './pages/adminpanel/Dashboard'
@@ -23,9 +22,9 @@ import ProviderQuestions from './pages/providers/ProviderQuestions'
 import StudentPage from './pages/students/StudentPage'
 import StudHome from './pages/students/StudHome'
 import StudProfile from './pages/students/StudProfile'
-
-
-
+import CourseDetails from './pages/partials/CourseDetails'
+import StudCourses from './pages/students/StudCourses'
+import User from './pages/adminpanel/User'
 
 function App() {
 
@@ -52,7 +51,9 @@ function App() {
             <Route index element={<Navigate to='dashboard' />} ></Route>
             <Route path='dashboard' exact element={<Dashboard />}></Route>
             <Route path='courses' exact element={<Courses />}></Route>
+            <Route path='courses/:course_id' exact element={<CourseDetails is_provider={false}/>}/>
             <Route path='users' exact element={<UsersList />}></Route>
+            <Route path='users/:user_id' exact element={<User />}></Route>
             <Route path='providers' exact element={<Providers />}></Route>
             <Route path='plans' exact element={<Plans />}></Route>
             <Route path='profile' exact element={<Profile />}></Route>
@@ -63,6 +64,7 @@ function App() {
             <Route path='dashboard' exact element={<ProviderDashboard />}></Route>
             <Route path='profile' exact element={<ProviderProfile />}></Route>
             <Route path='courses' exact element={<ProviderCourses />}></Route>
+            <Route path='courses/:course_id' exact element={<CourseDetails is_provider={true}/>}/>
             <Route path='plans' exact element={<ProviderPlan />}></Route>
             <Route path='questions' exact element={<ProviderQuestions />}></Route>
           </Route>
@@ -70,10 +72,14 @@ function App() {
           <Route path='/student' exact element={<CheckAuth from={'student'}><StudentPage /></CheckAuth>}>
             <Route index element={<Navigate to='home' />} ></Route>
             <Route path='home' exact element={<StudHome />}></Route>
+            <Route path='courses' exact element={<StudCourses />}></Route>
+            <Route path='courses/:course_id' exact element={<CourseDetails is_provider={false}/>}/>
             <Route path='profile' exact element={<StudProfile />}></Route>
           </Route>
           
       </Routes>
+      <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+ 
     </BrowserRouter>
     </>
   )
