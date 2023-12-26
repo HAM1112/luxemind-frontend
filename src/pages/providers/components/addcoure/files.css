@@ -1,0 +1,7 @@
+.file-display{
+    border: 5px solid #302e2d;
+    height: 180px;
+    border-radius: 20px;
+    background-color: rgb(81, 73, 73);
+    color: white;
+}
