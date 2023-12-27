@@ -19,14 +19,32 @@ function AddLesson(props) {
         lesson_url : '',
         module : module_id,
     });
+
     const handleFileInput = (e) => {
+        console.log("This is from the handlefile input!!!")
         if (lesson.name == '') {
             alert('Add name first')
             e.target.value = '',
             setFile(null)
             return
         }
-        setFile(e.target.files[0])
+        setLoading(true)
+        console.log(file);
+        const lesson_name = convertToUnderscore(lesson.name)
+        const fileRef = ref(firebasestore , `courses/lessons/${module_id}_${lesson_name}`)
+        uploadBytes(fileRef , e.target.files[0])
+        .then((snapshot) => {
+            getDownloadURL(snapshot.ref).then(url => {
+                console.log("get url worked");
+                setLesson(prev => ({...prev, lesson_url : url}))
+                console.log('video uploaded successfully');
+            }).catch(error => {
+                console.log('error in getdownload url');
+            })
+        }).catch(error => {
+            console.log('error in uploadbytes');
+        })
+        setLoading(false)
     }
 
     const handleChange = (e) => {
@@ -34,6 +52,7 @@ function AddLesson(props) {
     }
 
     const handleSubmit = () => {
+        console.log('save clicked');
         if (lesson.name === '' || lesson.lesson_url === '') {
             alert('name or video is not added')
             return
@@ -46,43 +65,16 @@ function AddLesson(props) {
         ).then((response)=>{
             if (response.status === 201) {
                 console.log('Lesson added Successfully');
-            }else{
                 console.log(response.data);
             }
             getModal(false)
         }).catch((erro)=>{
             console.log(erro)
         })
+        console.log('save completed');
         setLoading(false)
     }
-    
-    useEffect(() => {
-        
-    }, [loading]);
-    
-    useEffect(() => {
-        if(file == null){
-            console.log('file is null')
-            return
-        }
-        setLoading(true)
-        console.log(file);
-        const lesson_name = convertToUnderscore(lesson.name)
-        const fileRef = ref(firebasestore , `courses/lessons/${module_id}_${lesson_name}`)
-        uploadBytes(fileRef , file)
-        .then((snapshot) => {
-            getDownloadURL(snapshot.ref).then(url => {
-                console.log("get url worked");
-                setLesson(prev => ({...prev, lesson_url : url}))
-                console.log('image uploaded successfully');
-            }).catch(error => {
-                console.log('error in getdownload url');
-            })
-        }).catch(error => {
-            console.log('error in uploadbytes');
-        })
-        setLoading(false)
-    }, [file]);
+
 
   return (
     <div className='w-[800px] p-14 bg-white rounded'>
@@ -95,6 +87,7 @@ function AddLesson(props) {
 
         <div className='grid gap-1 border-b-2 pb-2'>   
           <h3 className='font-semibold my-2'>Add preview video</h3>
+          {loading ? <h1>hello world!!!</h1> : null }
           <div className='flex items-center gap-1 w-ful'>
             <div className='w-7/12'>
               <input name='lesson_video' onChange={handleFileInput} accept='video/*' className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" />

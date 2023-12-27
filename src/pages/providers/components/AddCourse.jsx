@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './addcourse.css'
 import { TiTick } from "react-icons/ti";
-import Detalis from './addcoure/Detalis';
+import Details from './addcoure/Detalis';
 import Files from './addcoure/Files';
 import Additional from './addcoure/Additional';
 import api from '../../../api/api';
@@ -35,26 +35,20 @@ function AddCourse(props) {
 
   useEffect(() => {
     setCourse(props.course)
-    if(props.course){
-      console.log(props.course);
-      api.get(
-        `provider/getCourseDetails/${props.course.id}`,
-        auth
-      ).then((response) =>{
-        setCourse(response.data)
-      })
+    if(props.edit == 'true'){
+      setCourse(props.course)
     }  
   }, []);
   
   useEffect(() => {
-    console.log('re rendering');
+    console.log(course);
   }, [course]);
   
   
   const getData = (data) => {
     setCourse(data)
   }
-  let components= [<Detalis course={course} onChange={getData}/> , <Files course={course} onChange={getData}/> , <Additional course={course} onChange={getData}/> ]
+  let components= [<Details course={course} onChange={getData}/> , <Files course={course} onChange={getData}/> , <Additional course={course} onChange={getData}/> ]
   
   
   const handleNext = () => {
