@@ -25,6 +25,9 @@ import StudProfile from './pages/students/StudProfile'
 import CourseDetails from './pages/partials/CourseDetails'
 import StudCourses from './pages/students/StudCourses'
 import User from './pages/adminpanel/User'
+import Lesson from './pages/partials/Lesson'
+import FullCourse from './pages/partials/FullCourse'
+
 
 function App() {
 
@@ -61,8 +64,13 @@ function App() {
 
           <Route path='/provider' exact element={<CheckAuth from={'provider'}><ProviderHome menus={providerMenuItems} /></CheckAuth>}>
             <Route index element={<Navigate to='dashboard' />} ></Route>
+            <Route path='home' exact element={<Navigate to='/provider/dashboard' />}></Route>
             <Route path='dashboard' exact element={<ProviderDashboard />}></Route>
             <Route path='profile' exact element={<ProviderProfile />}></Route>
+            <Route path='course/:course_id' exact element={ <FullCourse />}>
+              <Route index element={<Navigate to={'/provider/courses'}/>}></Route>
+              <Route path='lesson/:lesson_id' exact element={<Lesson />}></Route>
+            </Route>
             <Route path='courses' exact element={<ProviderCourses />}></Route>
             <Route path='courses/:course_id' exact element={<CourseDetails is_provider={true}/>}/>
             <Route path='plans' exact element={<ProviderPlan />}></Route>
