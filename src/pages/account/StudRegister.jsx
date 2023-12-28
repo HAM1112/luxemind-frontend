@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import api from '../../api/api';
+import { useNavigate } from 'react-router-dom';
 
 
 
 function StudRegister() {
 
   const [Data, setData] = useState({ email:"" , password : "" , username:""});
-    
+  const navigate = useNavigate()
    
   const handlleSubmit = () => {
      if (Object.values(Data).some(value => value === "" || value === null)){
@@ -16,6 +17,7 @@ function StudRegister() {
        api.post('/account/studRegister/', Data)
        .then(function (response) {
            console.log(response);
+           navigate('/account/login')
        })
        .catch(function (error) {
            console.log(error);

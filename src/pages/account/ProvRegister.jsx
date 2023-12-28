@@ -26,6 +26,7 @@ const [Data, setData] = useState({username : '' , email : ''  , password : ''});
                     console.log(response.data);
                     dispatch(addTokens(response.data))
                     dispatch(addUserDetails(jwtDecode(response.data.access)))
+                    navigate('/account/login')
                 }
            }).catch((error)=>{
             console.log(error);
