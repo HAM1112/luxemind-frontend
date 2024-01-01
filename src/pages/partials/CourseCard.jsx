@@ -6,6 +6,7 @@ import CourseDetails from './CourseDetails';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/api';
 import useUrlHeader from '../../utilities/urlHeader';
+import { useSelector } from 'react-redux';
 
 function CourseCard({details , subject , is_admin , provider}) {
     const [course, setCourse] = useState(details);
@@ -13,7 +14,7 @@ function CourseCard({details , subject , is_admin , provider}) {
     const sub = subject
     const auth = useUrlHeader()
     const navigate = useNavigate()
-
+    const user = useSelector(state => state.user.value)
     const getModal = (bool) => {
         setModal(bool)
     }
@@ -45,7 +46,7 @@ function CourseCard({details , subject , is_admin , provider}) {
   return (
     <>
 
-        <div className='course-card relative rounded-2xl select-none '>
+        <div className='course-card h-[320px] relative rounded-2xl select-none '>
             <div onClick={() => { 
                 console.log('course open')
                 navigate(`${course.id}`)
@@ -73,49 +74,56 @@ function CourseCard({details , subject , is_admin , provider}) {
             </div>
             {/* published of not just above are same */}
 
-            <div className='absolute b-[10px] w-full flex justify-center gap-4 bottom-[20px] '>
-                        {
-                            is_admin ? 
-                            <button className='w-[120px] py-1 text-center bg-[#4B527E] rounded text-white'
-                            onClick={handleApprove}
-                            >
-                            Approve
-                            </button>
-                            :
+                    {
+                        !user.is_superuser && !user.is_provider ?  
+                        <div className='absolute b-[20px] w-full flex px-5 gap-4 bottom-[20px] '>
+                            <div className='bg-gray-300 px-2 rounded capitalize'>
+                                {course.level}
+                            </div>
+                        </div>
+                        :
+                         
+                            <div className='absolute b-[10px] w-full flex justify-center gap-4 bottom-[20px] '>
+                                        {
+                                            is_admin ? 
+                                            <button className='w-[120px] py-1 text-center bg-[#4B527E] rounded text-white'
+                                            onClick={handleApprove}
+                                            >
+                                            Approve
+                                            </button>
+                                            :
+                                        (
+                                            course.is_published ? 
+                                            <button className='w-[120px] py-1 text-center bg-[#4B527E] rounded text-white'    
+                                            >
+                                            Unpublish
+                                            </button>
+                                            :
+                                            (course.is_pending ? 
+                                                <button className='w-[120px] py-1 text-center bg-gray-300 rounded text-white' disabled
+                                                
+                                                >
+                                                Pending
+                                                </button>
+                                                :
+                                                <button className='w-[120px] py-1 text-center bg-[#4B527E] rounded text-white' 
+                                                onClick={handlePublish}
+                                                >
+                                                Publish
+                                                </button>
 
+                                            )
 
-                        (
-                            course.is_published ? 
-                            <button className='w-[120px] py-1 text-center bg-[#4B527E] rounded text-white'
-                            
-                            >
-                            Unpublish
-                            </button>
-                            :
-                            (course.is_pending ? 
-                                <button className='w-[120px] py-1 text-center bg-gray-300 rounded text-white' disabled
-                                
-                                >
-                                Pending
-                                </button>
-                                :
-                                <button className='w-[120px] py-1 text-center bg-[#4B527E] rounded text-white' 
-                                onClick={handlePublish}
-                                >
-                                Publish
-                                </button>
-
-                            )
-
-                        )
-                        }
-                <button className='w-[120px] py-1 text-center bg-[#E5C3A6] rounded'
-                onClick={()=>{
-                    console.log('edit coures clicked')
-                    setModal(true)
-                }}
-                >Edit</button>
-            </div>
+                                        )
+                                        }
+                                <button className='w-[120px] py-1 text-center bg-[#E5C3A6] rounded'
+                                onClick={()=>{
+                                    console.log('edit coures clicked')
+                                    setModal(true)
+                                }}
+                                >Edit</button>
+                            </div>
+                    }
             {modal && <CustomModal component={<AddCourse course={course} edit="true" getModal={getModal} />} />}
         </div>
     </>
