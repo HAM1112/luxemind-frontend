@@ -93,7 +93,7 @@ function Curriculum(props) {
   return (
     <>
 
-    <div className='mt-10 px-8 grid'>
+    <div className='my-10 px-8 grid '>
         <div className='flex w-full'>
             {
                 is_provider ?

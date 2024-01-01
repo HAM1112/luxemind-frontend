@@ -1,23 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import accPic from '../../assets/acco.png'
 
 
 function Description(props) {
     const {course , provider} = props
+    useEffect(() => {
+        
+    }, [course]);
     return (
         <div className='mt-10 '>
-            <div className='px-8 pb-10 border-b-2 border-[#2E4374]'>
-                <video controls src={course.course_preview} className='p-4 w-full'></video>
+            <div className='px-8 pb-10 border-b-2 border-[#2E4374] flex justify-center'>
+                <video controls src={course.course_preview} className='p-4  w-[600px]'></video>
             </div>
             <div className='p-3'>
                 <h1 className='py-3 text-[28px]'>Description</h1>
-                <p className='text-[19px]'>{course.description}</p>
+                <p className='text-[19px]'>{course.description ?<> {course.description.split('\n').map((paragraph, index) => <React.Fragment key={index}>{paragraph}<br /></React.Fragment>)}</> : course.description}</p>
 
                 <h1 className='py-3 text-[28px]'>About</h1>
-                <p className='text-[19px]'>{course.about}</p>
+                <p className='text-[19px]'>{ course.about ? <>{course.about.split('\n').map((paragraph, index) => <React.Fragment key={index}>{paragraph}<br /></React.Fragment>)}</> : course.about }</p>
                 
                 <h1 className='py-3 text-[28px]'>Prequisites</h1>
-                <p className='text-[19px]'>{course.prerequisites}</p>
+                <p className='text-[19px]'>{ course.prerequisites ? <>{course.prerequisites.split('\n').map((paragraph, index) => <React.Fragment key={index}>{paragraph}<br /></React.Fragment>)}</> : course.prerequisites }</p>
             </div>
 
             <div className='flex w-ful mt-10'>
