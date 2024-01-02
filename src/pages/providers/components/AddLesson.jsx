@@ -28,6 +28,7 @@ function AddLesson(props) {
             setFile(null)
             return
         }
+        console.log(e.target.files[0]);
         setLoading(true)
         console.log(file);
         const lesson_name = convertToUnderscore(lesson.name)
@@ -37,6 +38,7 @@ function AddLesson(props) {
             getDownloadURL(snapshot.ref).then(url => {
                 console.log("get url worked");
                 setLesson(prev => ({...prev, lesson_url : url}))
+                setLoading(false)
                 console.log('video uploaded successfully');
             }).catch(error => {
                 console.log('error in getdownload url');
@@ -68,13 +70,17 @@ function AddLesson(props) {
                 console.log(response.data);
             }
             getModal(false)
+            setLoading(false)
         }).catch((erro)=>{
             console.log(erro)
+            setLoading(false)
         })
         console.log('save completed');
-        setLoading(false)
     }
 
+    useEffect(() => {
+        
+    }, [loading]);
 
   return (
     <div className='w-[800px] p-14 bg-white rounded'>
@@ -102,8 +108,8 @@ function AddLesson(props) {
 
       <div className='flex justify-end gap-5 my-6'>
         {/* {loading ?  } */}
-        <button className='px-3 rounded text-white bg-violet-500' onClick={handleSubmit}>
-            { loading ? <SpinnerCircular size={50} thickness={100} speed={100} color="rgba(255, 255, 255, 1)" secondaryColor="rgba(255, 255, 255, 1)" /> : <>Save</> }
+        <button className='flex justify-center items-center w-[80px] rounded text-white bg-violet-500' onClick={handleSubmit}>
+            { loading ? <SpinnerCircular size={20} thickness={100} speed={100} color="rgba(255, 255, 255, 1)" secondaryColor="rgba(0, 0, 0, 1)" /> : <>Save</> }
         </button>
         <button className='px-3 py-2 text-white bg-red-700 rounded' onClick={()=>getModal(false)}>Cancel</button>
       </div>

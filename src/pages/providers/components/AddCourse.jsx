@@ -21,11 +21,9 @@ function AddCourse(props) {
     description : '' ,
     about : '',
     short_description : '',
-
     course_thumbnail : '',
     course_preview : '',
     certificate_url : '',
-
     subject : '',
     course_price : 0,
     no_of_days : 0,
@@ -34,7 +32,7 @@ function AddCourse(props) {
   });
 
   useEffect(() => {
-    setCourse(props.course)
+    
     if(props.edit == 'true'){
       setCourse(props.course)
     }  
@@ -166,6 +164,7 @@ function AddCourse(props) {
 
   const handleSave = () => {
     console.log(props.edit)
+    console.log(course);
     if (props.edit === "true") {
       console.log(course);
       api.put(
@@ -209,9 +208,8 @@ function AddCourse(props) {
           props.getModal(false)
         }).catch((response)=>{
           console.log('this is the secound error in course upload btn clicked');
-          const message = response.response.data.short_description['0']
-          console.log(Object.keys(response.response.data)[0]);
-          toast.error(message, {
+          
+          toast.error('some error has occured', {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,

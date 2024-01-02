@@ -48,7 +48,7 @@ function ProviderProfile() {
     }
     
     const handleSubmit = () =>{
-        console.log(user)
+        // console.log('save')
         api.put(
             '/provider/profile-update',
             user,
@@ -65,6 +65,7 @@ function ProviderProfile() {
                 progress: undefined,
                 theme: "light",
                 });
+                // console.log(response.data);
         })
         .catch((error)=>{
             toast.error(error.data.message, {
