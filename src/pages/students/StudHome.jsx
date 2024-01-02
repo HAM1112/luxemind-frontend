@@ -32,7 +32,7 @@ function StudHome() {
   
   return (
 
-    <div>
+    <div className='px-36'>
       <Banner />
     </div>
   )
