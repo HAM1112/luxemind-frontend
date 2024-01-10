@@ -15,13 +15,14 @@ const Login = () =>{
     const dispatch = useDispatch()
 
     const handlleSubmit = () => {
-        console.log(Data);
         api.post('/account/token/', Data)
         .then(function (response) {
             if(response.status == 200){
-                console.log(response.data)
                 dispatch(addTokens(response.data))
                 dispatch(addUserDetails(jwtDecode(response.data.access)))
+                localStorage.setItem('user' , response.data.access)
+                localStorage.setItem('tokens' , response.data.refresh)
+                console.log(response.data);
             }
         })
         .catch(function (error) {
