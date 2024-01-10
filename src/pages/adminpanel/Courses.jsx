@@ -45,12 +45,13 @@ function Courses() {
               {/* let selectedProvider = providers.find(item => item.id === course.provider); */}
               
               return (
-                <div><CourseCard is_admin={true} provider={'testing'} details={course} /></div>
+                <div className='course-card h-[320px] relative select-none'><CourseCard is_admin={true} provider={'testing'} details={course} /></div>
               )
             })
           }
         </div>
       </div>
+
 
       <div className='mt-10'>
         <h1 className='font-bold'>Pushlished Courses</h1>
@@ -61,7 +62,7 @@ function Courses() {
               {/* let selectedProvider = providers.find(item => item.id === course.provider); */}
               
               return (
-                <div><CourseCard is_admin={true} provider={'testing'} details={course} /></div>
+                <div className='course-card h-[320px] relative select-none'><CourseCard is_admin={true} provider={'testing'} details={course} /></div>
               )
             })
           }
