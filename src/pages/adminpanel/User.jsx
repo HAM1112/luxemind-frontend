@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { useParams  } from 'react-router-dom'
+import { Link, useParams  } from 'react-router-dom'
 import api from '../../api/api';
 import useUrlHeader from '../../utilities/urlHeader';
+import acco from '../../assets/acco.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 export default function User() {
 
-    const { user_id , what } = useParams()
+    const { user_id  } = useParams()
     const [user, setUser] = useState({});
-    const auth = useUrlHeader()
+    const [courses, setCourses] = useState([]);
+    const [payments, setPayments] = useState([]);
+    const [certificate,setCertificate ] = useState([])
     useEffect(() => {
         api.get(
             `/adminpanel/get_user_details/${user_id}`,
-            auth
         ).then((res)=>{
-            setUser(res.data)
+            setUser(res.data.user)
+            setCourses(res.data.courses)
+            setPayments(res.data.payments)
+            // const certified = res.data.payments.
             console.log(res.data);
         })
     }, []);
@@ -23,7 +30,7 @@ export default function User() {
 
 
   return (
-    <div className="bg-gray-100 border-2 border-red-600">
+    <div className="bg-gray-100 ">
       <div className="container mx-auto py-8">
         <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
           <div className="col-span-4 sm:col-span-9">
@@ -64,13 +71,15 @@ export default function User() {
                     <div className='w-2/3'>{user.profession}</div>
                 </div>
                 :null}
-
               </div>
+
+              {
+                user.is_provider &&<>
 
               <h3 className="font-semibold text-center mt-3 -mb-2">Find me on</h3>
               <div className="flex justify-center items-center gap-6 my-6">
                 {/* Update the href attribute with your social media profile links */}
-                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit LinkedIn" href="#" target="_blank">
+                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit LinkedIn" href={user.linked_in_link} target="_blank">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="h-6">
                     <path
                       fill="currentColor"
@@ -79,7 +88,7 @@ export default function User() {
                   </svg>
                 </a>
                 {/* Update the href attribute with your social media profile links */}
-                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit YouTube" href="#" target="_blank">
+                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit YouTube" href={user.youtube_link} target="_blank">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="h-6">
                     <path
                       fill="currentColor"
@@ -87,17 +96,9 @@ export default function User() {
                     ></path>
                   </svg>
                 </a>
+                
                 {/* Update the href attribute with your social media profile links */}
-                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit Facebook" href="#" target="_blank">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="h-6">
-                    <path
-                      fill="currentColor"
-                      d="m279.14 288 14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
-                    ></path>
-                  </svg>
-                </a>
-                {/* Update the href attribute with your social media profile links */}
-                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit Instagram" href="#" target="_blank">
+                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit Instagram" href={user.insta_link} target="_blank">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="h-6">
                     <path
                       fill="currentColor"
@@ -105,32 +106,127 @@ export default function User() {
                     ></path>
                   </svg>
                 </a>
-                {/* Update the href attribute with your social media profile links */}
-                <a className="text-gray-700 hover:text-orange-600" aria-label="Visit Twitter" href="#" target="_blank">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="h-6">
-                    <path
-                      fill="currentColor"
-                      d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"
-                    ></path>
-                  </svg>
-                </a>
-              </div>
+                
+              </div> 
+                </>
+              }
 
-              <h2 className="text-xl font-bold mt-6 mb-4">Experience</h2>
+
+              {
+                courses &&<>
+
+              <h2 className="text-lg font-bold mt-6 mb-2">Courses Purchased</h2>
               <div className="mb-6">
-                <div className="flex justify-between flex-wrap gap-2 w-full">
-                  <span className="text-gray-700 font-bold">Web Developer</span>
-                  <p>
-                    <span className="text-gray-700 mr-2">at ABC Company</span>
-                    <span className="text-gray-700">2017 - 2019</span>
-                  </p>
-                </div>
-                <p className="mt-2">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus est vitae tortor ullamcorper, ut
-                  vestibulum velit convallis. Aenean posuere risus non velit egestas suscipit.
-                </p>
+                
+                {
+                  courses.map(course => {
+                    return (
+                    <Link to={`/admin/courses/${course.id}`}>
+                      <div className='w-full h-[130px] mt-3 border border-2 flex gap-3 p-2'>
+
+                        <img src={course.course_thumbnail} className='w-[180px] h-full' alt="" />
+                        <div>
+                          <h4 className='font-semibold text-[17px]'>{course.name}</h4>
+                          <p className='capitalize text-[15px]'>Level : {course.level}</p>
+                        </div>
+                      </div>
+                    </Link>
+                    )
+                  })
+                }
               </div>
-              {/* Repeat the structure for each experience entry */}
+                </>
+              }
+              {/* {
+                quizs && <>
+                  <h2 className="text-lg font-bold mt-6 mb-2">Quizs Attended</h2>
+                  <div className="mb-6">
+                    
+                  {
+              quizs.map(quiz => {
+                const percentage = (quiz.score_achieved / quiz.total_score) * 100 
+                const check = percentage > 95 ? 3 : percentage > 85 ? 2 : percentage > 70 ? 1 : 0;
+                
+                return(
+                  <div className='px-4 py-5 flex w-full gap-5 text-[14px] border border-gray-300 mt-2 items-center'>
+                    <div className='w-6/12'>
+                      <h3>{quiz.course}</h3>
+                    </div>
+                    <div className='w-1/12'>
+                      <h3>{quiz.score_achieved} / {quiz.total_score}</h3>
+                    </div>
+                    <div className='w-2/12'>
+                      <div className='h-[40px] flex items-end'>
+                      <FontAwesomeIcon icon={faStar} className={`h-[28px] ${check > 0 ? 'text-yellow-300' : 'text-gray-300'}`}/>
+                      <FontAwesomeIcon icon={faStar} className={`h-[28px] self-start ${check > 1 ? 'text-yellow-300' : 'text-gray-300'}`}/>
+                      <FontAwesomeIcon icon={faStar} className={`h-[28px] ${check > 2 ? 'text-yellow-300' : 'text-gray-300'}`}/>
+                      </div>
+                    </div>
+                    <div className='1/12'>
+                      {quiz.passed ? <h3 className='text-green-500'>Passed</h3> : <h3 className='text-red-500'>Falied</h3> }
+                    </div>
+                    <div className='2/12'>
+                      {quiz.passed ? <Link to={'/student/profile/certificates'}>Certificate</Link> : <Link to={`/student/quiz/${quiz.course_id}`}>Retake</Link> }
+                    </div>
+                  </div>
+                )
+              })
+            }
+
+
+                  </div>
+                </>
+              } */}
+
+             {
+              payments &&
+                <div class="relative overflow-x-auto">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Course name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Provider
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Transaction Id
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            payments.map(payment => {
+                              return (
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {payment.course.course_name}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {payment.course.provider_name}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {payment.payement.transaction}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                    {payment.payement.status}
+                                    </td>
+                                </tr>
+                              )
+                            })
+                          }
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+             }
+
+
             </div>
           </div>
           
@@ -138,20 +234,13 @@ export default function User() {
             <div className="bg-white shadow rounded-lg p-6">
               <div className="flex flex-col items-center">
                 <img
-                  src="https://randomuser.me/api/portraits/men/94.jpg"
+                  src={user.avatar ? user.avatar : acco}
                   className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
                   alt=""
                 />
                 <h1 className="text-xl font-bold">{user.username}</h1>
                 <p className="text-gray-700">{user.is_superuser ? <>Admin</>: (user.is_provider ? <>Provider</> : <>Student</>) }</p>
-                {/* <div className="mt-6 flex flex-wrap gap-4 justify-center">
-                  <a href="#" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
-                    Contact
-                  </a>
-                  <a href="#" className="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">
-                    Resume
-                  </a>
-                </div> */}
+                
               </div>
               <hr className="my-6 border-t border-gray-300" />
               <div className="flex flex-col">
