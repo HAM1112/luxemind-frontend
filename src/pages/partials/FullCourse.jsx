@@ -1,16 +1,16 @@
-import { faArrowLeft, faArrowRight, faChevronCircleDown, faChevronDown, faCircleCheck, faCirclePlay } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
-import ReactPlayer from 'react-player'
-import { Link, Outlet, useParams } from 'react-router-dom'
+import { Link, Outlet, useNavigate, useParams } from 'react-router-dom'
 import api from '../../api/api'
 import useUrlHeader from '../../utilities/urlHeader'
 import { useSelector } from 'react-redux'
+import {  faChevronDown, faCircleCheck, faCirclePlay } from '@fortawesome/free-solid-svg-icons'
 
 
 
 function FullCourse() {
   const {course_id} = useParams()
+  const navigate = useNavigate()
   const user = useSelector(state => state.user.value)
   const [courseDetails, setCourseDetails] = useState(null);
   const [curriculum, setCurriculum] = useState([]);
@@ -66,8 +66,7 @@ function FullCourse() {
         }
       })
     ]})
-    
-    
+
     
     return parseInt((convertTimeToSeconds(completed)/convertTimeToSeconds(total))*100)
 
@@ -103,6 +102,7 @@ function FullCourse() {
       
       {/* video side */}
       <div className={`${user.is_provider ? 'w-2/3' : 'w-3/4' }  py-3 px-24`}> 
+        
         <Outlet />
       </div>
 
@@ -157,6 +157,22 @@ function FullCourse() {
             </div>
           )
         })}
+        {
+          !user.is_superuser && !user.is_provider ?
+          <div className='w-full p-3'>
+            <button onClick={()=>{
+              console.log(p_lessons[p_lessons.length -1].is_watched)
+              if(!p_lessons[p_lessons.length -1].is_watched){
+                console.log('watch all the lesson to unlock this')
+                return
+              }
+                navigate(`/student/quiz/${course_id}`)
+            }} className='bg-[#4B527E] w-full text-white py-3 rounded'>
+              Take Exam
+            </button>
+          </div>
+          :null
+        }
         {/* content ends here */}
       </div>
     </div>
