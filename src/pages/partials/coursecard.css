@@ -7,17 +7,12 @@
     min-width: 230px;
     /* height: 320px; */
     background: #e0e0e0;
-    box-shadow:  5px 5px 21px #cecece,
-                -5px -5px 21px #f2f2f2;
-    
+    box-shadow:  5px 5px 8px #cccccc,
+    -5px -5px 8px #f4f4f4;
 }
 
 .course-card:hover{
-    box-shadow:  10px 10px 20px #cecece,
-             -10px -10px 20px #fbfbfb;
+    box-shadow:  5px 5px 18px #cccccc,
+    -5px -5px 18px #f4f4f4;
 }
 
-.course-card .content{
-    /* background: linear-gradient(225deg, #f0f0f0, #cacaca); */
-    
-}
