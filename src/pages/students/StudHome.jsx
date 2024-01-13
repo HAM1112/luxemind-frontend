@@ -14,7 +14,6 @@ function StudHome() {
     api.get(`/student/profile/`,auth)
     .then(response => {
       setUser(response.data)
-      console.log(response.data);
     })
   }, []);
   useEffect(() => {

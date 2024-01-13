@@ -5,9 +5,9 @@ import './studentpage.css'
 
 function StudentPage() {
   return (
-    <div className='border-2 border-red-900'>
+    <div className=''>
       <Navbar />
-      <div className=' h-full h-screen'>
+      <div className='h-full h-screen '>
         <Outlet />
       </div>
     </div>

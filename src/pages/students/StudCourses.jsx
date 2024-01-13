@@ -4,6 +4,7 @@ import useUrlHeader from '../../utilities/urlHeader';
 import CourseCard from '../partials/CourseCard';
 
 
+
 function StudCourses() {
     const [courses, setCourses] = useState([]);
     const [filteredCourses, setfilteredCourses] = useState([]);
@@ -20,7 +21,6 @@ function StudCourses() {
             auth
         ).then(response => {
               setSubjects(response.data)
-              console.log(response.data);
         }).catch(error => {
             console.log(error.code);
         })
@@ -30,16 +30,14 @@ function StudCourses() {
             '/student/get_all_published_courses/',
             auth
         ).then((response) => {
-        setCourses(response.data)
-        setfilteredCourses(response.data)
-        console.log(response.data);
+          setCourses(response.data)
+          setfilteredCourses(response.data)
         }).catch((error)=>{
         console.log('newtwork issue');
         })
     }, []);
 
     useEffect(() => {
-      console.log(checkedSubject);
       let allCourses = courses
       if (checkedSubject && checkedSubject.length > 0 ) {
           allCourses = allCourses.filter(course => checkedSubject.includes(`${course.subject}`))
@@ -71,63 +69,65 @@ function StudCourses() {
     }
 
   return (
-    <div className=' md:flex  w-full p-10 bg-[linear-gradient(225deg, #f0f0f0, #cacaca);] h-screen'>
-      <div className=' md:w-1/4 px-3 md:px-10 lg:px-24 overflow-y-scroll'>
-        <h1 className='text-stone-500'>Refine your search</h1>
-        <div>
-          <h3 className='text-[21px] font-bold pt-8 pb-3'>Subject</h3> 
-          
-          {subjects.map(subject => {
-            return (
-            <div className='flex items-center gap-3'>
-              <input type="checkbox" name={`${subject.id}`} className='text-[#00262b] border-2 border-black focus:ring-black' onClick={handleSubjectCheck}/>
-              <p className='text-[20px] capitalize'>{subject.name}</p>
-            </div>
-            )
-          })}
-
-        </div>
-        <div>
-          <h3 className='text-[21px] font-bold pt-8 pb-3'>Level</h3>
-          
-          {
-            levels.map(level => {
-              return (
-              <div className='flex items-center gap-3'>
-                <input type="checkbox" name={`${level}`} onClick={handleLevelCheck} className='text-[#00262b] border-2 border-black focus:ring-black' />
-                <p className='text-[20px] capitalize'>{level}</p>
-              </div>
-              )
-            })
-          }
-
-        </div>
-        <div>
-          <h3 className='text-[21px] font-bold pt-8 pb-3'>Price</h3>
-          {
-            prices.map((price , index ) => {
-              return (
-                <div className='flex items-center gap-3'>
-                  <input type="checkbox" name={index} onClick={handlePriceCheck} className='text-[#00262b] border-2 border-black focus:ring-black'/>
-                  <p className='text-[20px]'>{price}</p>
-                </div>
-              )
-            })
-          }
-        </div>
-
-
-      </div>
-      <div className='md:w-3/4 px-5 h-screen'>
-        <h1 className='font-bold text-[30px]'>Courses</h1>
-        <div className='mt-5 grid grid-cols-1  justify-items-stretch sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-4'>
-          {
-            filteredCourses.map((course) => {
-               
-              let selectedSubject = subjects.find(item => item.id === course.subject);
+    <div className=' md:flex  w-full p-3 lg:p-10 bg-[linear-gradient(225deg, #f0f0f0, #cacaca);] h-screen'>
+      
+      <div className=' md:w-1/4 px-0 sm:px-3 md:px-10 lg:px-24 overflow-y-scroll'>
+        <h1 className='border border-2 text-[14px] border-gray-300 p-2 sm:py-2 bg-gray-100 md:border-none md:bg-white md:text-stone-500'>Refine your search</h1>
+        <div className='hidden md:block'>
+            <div className=''>
+              <h3 className='text-[17px] lg:text-[21px] font-bold pt-2 lg:pt-8 pb-3'>Subject</h3> 
               
+              {subjects.map(subject => {
+                return (
+                <div className='flex items-center gap-2 lg:gap-3'>
+                  <input type="checkbox" name={`${subject.id}`} className='text-[#00262b] border-2 border-black focus:ring-black' onClick={handleSubjectCheck}/>
+                  <p className='text-[15px] lg:text-[20px] capitalize'>{subject.name}</p>
+                </div>
+                )
+              })}
+
+            </div>
+            <div>
+              <h3 className='text-[17px] lg:text-[21px] font-bold pt-2 lg:pt-8 pb-3'>Level</h3>
+              
+              {
+                levels.map(level => {
+                  return (
+                  <div className='flex items-center gap-3'>
+                    <input type="checkbox" name={`${level}`} onClick={handleLevelCheck} className='text-[#00262b] border-2 border-black focus:ring-black' />
+                    <p className='text-[15px] lg:text-[20px] capitalize'>{level}</p>
+                  </div>
+                  )
+                })
+              }
+
+            </div>
+            <div>
+              <h3 className='text-[17px] lg:text-[21px] font-bold pt-2 lg:pt-8 pb-3'>Price</h3>
+              {
+                prices.map((price , index ) => {
+                  return (
+                    <div className='flex items-center gap-3'>
+                      <input type="checkbox" name={index} onClick={handlePriceCheck} className='text-[#00262b] border-2 border-black focus:ring-black'/>
+                      <p className='text-[15px] lg:text-[20px]'>{price}</p>
+                    </div>
+                  )
+                })
+              }
+            </div>
+        </div>
+      </div>
+
+      <div className='md:w-3/4 px-0 sm:px-5 h-screen'>
+        <h1 className='font-bold text-[20px] mt-3 sm:text-[30px]'>Courses</h1>
+        <div className='mt-2 sm:mt-5 grid grid-cols-1 sm:justify-items-stretch sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-4'>
+          {
+            filteredCourses.map((course) => {        
+              let selectedSubject = subjects.find(item => item.id === course.subject);            
               return (
-                <div><CourseCard details={course} subject={selectedSubject.name}/></div>
+                <div className='course-card h-[320px] relative select-none '>
+                  <CourseCard details={course} subject={selectedSubject ? selectedSubject.name : null}/>
+                </div>
               )
             })
           }
