@@ -42,17 +42,19 @@ function ProviderCourses() {
   }
 
   return (
-    <div className='border-2 border-yellow-300 w-full p-10 bg-[linear-gradient(225deg, #f0f0f0, #cacaca);]'>
+    <div className=' w-full py-3 px-1 md:p-10 bg-[linear-gradient(225deg, #f0f0f0, #cacaca);]'>
       <div>
         <h1 className='font-bold'>Unpublished Courses</h1>
-        <div className='mt-5 grid grid-cols-1 justify-items-stretch sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-5'>
+        <div className='mt-5 grid grid-cols-1 justify-items-center sm:justify-items-stretch sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-5'>
           {
             courses.filter(course => !course.is_published && !course.is_pending ).map((course) => {
                
               let selectedSubject = subjects.find(item => item.id === course.subject);
               
               return (
-                <div><CourseCard details={course} subject={selectedSubject.name}/></div>
+                <div className='course-card w-[270px] sm:w-auto h-[320px] relative select-none'>
+                  <CourseCard details={course} subject={selectedSubject.name}/>
+                </div>
               )
             })
           }
@@ -61,14 +63,16 @@ function ProviderCourses() {
 
       <div className='mt-10'>
         <h1 className='font-bold'>Pending Approval</h1>
-        <div className='mt-5 grid grid-cols-1 justify-items-stretch sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-5'>
+        <div className='mt-5 grid grid-cols-1 justify-items-center sm:justify-items-stretch sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-5'>
           {
             courses.filter(course => !course.is_published && course.is_pending ).map((course) => {
                
               let selectedSubject = subjects.find(item => item.id === course.subject);
               
               return (
-                <div><CourseCard details={course} subject={selectedSubject.name}/></div>
+                <div className='course-card w-[270px] sm:w-auto h-[320px] relative select-none'>
+                  <CourseCard details={course} subject={selectedSubject.name}/>
+                </div>
               )
             })
           }
@@ -77,14 +81,16 @@ function ProviderCourses() {
 
       <div className='mt-10'>
         <h1 className='font-bold'>Published Courses</h1>
-        <div className='mt-5 grid grid-cols-1 justify-items-stretch sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-5'>
+        <div className='mt-5 grid grid-cols-1 justify-items-center sm:justify-items-stretch sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-5'>
           {
             courses.filter(course => course.is_published && !course.is_pending ).map((course) => {
                
               let selectedSubject = subjects.find(item => item.id === course.subject);
               
               return (
-                <div><CourseCard details={course} subject={selectedSubject.name}/></div>
+                <div className='course-card w-[270px] sm:w-auto h-[320px] relative select-none'>
+                  <CourseCard details={course} subject={selectedSubject.name}/>
+                </div>
               )
             })
           }
