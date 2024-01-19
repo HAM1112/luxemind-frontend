@@ -7,7 +7,6 @@ function CheckAuth(props){
     const user = useSelector(state => state.user.value)
     let currentDate = new Date();
     
-    
     if (user !== null) {
         if (user.exp * 1000 < currentDate.getTime()) {
             
