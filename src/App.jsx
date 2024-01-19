@@ -1,7 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate, } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useParams, } from 'react-router-dom'
 import './App.css'
 import AuthForm from './pages/account/AuthForm'
-import AdminHome from './pages/adminpanel/AdminHome'
 import Dashboard from './pages/adminpanel/Dashboard'
 import UsersList from './pages/adminpanel/UsersList'
 import Login from './pages/account/Login'
@@ -21,19 +20,31 @@ import ProviderPlan from './pages/providers/ProviderPlan'
 import ProviderQuestions from './pages/providers/ProviderQuestions'
 import StudentPage from './pages/students/StudentPage'
 import StudHome from './pages/students/StudHome'
-import StudProfile from './pages/students/StudProfile'
+import StudProfile from './pages/students/components/StudProfile'
 import CourseDetails from './pages/partials/CourseDetails'
 import StudCourses from './pages/students/StudCourses'
 import User from './pages/adminpanel/User'
 import Lesson from './pages/partials/Lesson'
 import FullCourse from './pages/partials/FullCourse'
+import StudProfilePage from './pages/students/StudProfilePage'
+import MyCourses from './pages/students/components/MyCourses'
+import FavoriteCourses from './pages/students/components/FavoriteCourses'
+import SavedLesson from './pages/students/components/SavedLesson'
+import QandA from './pages/students/components/QandA'
+import Certificates from './pages/students/components/Certificates'
+import PageLayout from './pages/partials/PageLayout'
+import Quiz from './pages/partials/Quiz'
+import PDFCertificate from './pages/students/components/PDFCertificate'
+
+
+
 
 
 function App() {
 
-  const adminMenuItems = ['dashboard' , 'courses' , 'users' , 'providers' ,'plans' , 'profile']
+  const adminMenuItems = ['dashboard' , 'courses' , 'users' ,'plans' , 'profile']
   const providerMenuItems = ['dashboard' , 'courses' , 'questions' , 'plans' , 'profile']
-
+  const {course_id} = useParams()
 
   return (
     <>
@@ -50,7 +61,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route path='/admin' exact element={<CheckAuth from={'admin'}><AdminHome menus={adminMenuItems} /></CheckAuth>}>
+          <Route path='/admin' exact element={<CheckAuth from={'admin'}><PageLayout menus={adminMenuItems} /></CheckAuth>}>
             <Route index element={<Navigate to='dashboard' />} ></Route>
             <Route path='dashboard' exact element={<Dashboard />}></Route>
             <Route path='courses' exact element={<Courses />}></Route>
@@ -62,7 +73,7 @@ function App() {
             <Route path='profile' exact element={<Profile />}></Route>
           </Route>
 
-          <Route path='/provider' exact element={<CheckAuth from={'provider'}><ProviderHome menus={providerMenuItems} /></CheckAuth>}>
+          <Route path='/provider' exact element={<CheckAuth from={'provider'}><PageLayout menus={providerMenuItems} /></CheckAuth>}>
             <Route index element={<Navigate to='dashboard' />} ></Route>
             <Route path='home' exact element={<Navigate to='/provider/dashboard' />}></Route>
             <Route path='dashboard' exact element={<ProviderDashboard />}></Route>
@@ -72,6 +83,7 @@ function App() {
               <Route path='lesson/:lesson_id' exact element={<Lesson />}></Route>
             </Route>
             <Route path='courses' exact element={<ProviderCourses />}></Route>
+            <Route path='courses/:course_id/quiz/' exact element={<Quiz />}></Route>
             <Route path='courses/:course_id' exact element={<CourseDetails is_provider={true}/>}/>
             <Route path='plans' exact element={<ProviderPlan />}></Route>
             <Route path='questions' exact element={<ProviderQuestions />}></Route>
@@ -80,10 +92,24 @@ function App() {
           <Route path='/student' exact element={<CheckAuth from={'student'}><StudentPage /></CheckAuth>}>
             <Route index element={<Navigate to='home' />} ></Route>
             <Route path='home' exact element={<StudHome />}></Route>
+            <Route path='course/:course_id' exact element={ <FullCourse />}>
+              <Route index element={<Navigate to={'/studnet/courses'}/>}></Route>
+              <Route path='lesson/:lesson_id' exact element={<Lesson />}></Route>
+            </Route>
             <Route path='courses' exact element={<StudCourses />}></Route>
             <Route path='courses/:course_id' exact element={<CourseDetails is_provider={false}/>}/>
-            <Route path='profile' exact element={<StudProfile />}></Route>
+            <Route path='quiz/:course_id' exact element={<Quiz />}></Route>
+            <Route path='profile/' exact element={<StudProfilePage />}>
+              <Route index element={<Navigate to={'/student/profile/account'}/>}></Route>
+              <Route path='account' exact element={<StudProfile />}></Route>
+              <Route path='my_course' exact element={<MyCourses />}></Route>
+              <Route path='favorite_courses' exact element={<FavoriteCourses />}></Route>
+              <Route path='saved_lessons' exact element={<SavedLesson />}></Route>
+              <Route path='QAAs' exact element={<QandA />}></Route>
+              <Route path='certificates' exact element={<Certificates />}></Route>
+            </Route>
           </Route>
+          <Route path='test' exact element={<PDFCertificate />}></Route>
           
       </Routes>
       <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
