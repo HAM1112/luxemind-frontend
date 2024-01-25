@@ -49,6 +49,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      {console.log('testinggggg')}
       <Routes>
           {/* Admin Routes ..testing */}
           <Route path='/account' exact element={<AuthForm />}>
