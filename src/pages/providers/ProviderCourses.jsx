@@ -47,7 +47,7 @@ function ProviderCourses() {
   return (
     <div className=' w-full py-3 px-1 md:p-10 bg-[linear-gradient(225deg, #f0f0f0, #cacaca);]'>
     {
-      loading ?
+      !loading ?
       <SpinnerCircular size={70} thickness={134} speed={100} color="rgba(57, 160, 172, 1)" secondaryColor="rgba(0, 0, 0, 0.44)" />
       :
           <>
