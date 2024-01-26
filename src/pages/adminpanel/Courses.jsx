@@ -19,8 +19,8 @@ function Courses() {
       })
       .catch(error=>{
         console.log(error);
-      })
-    setLoading(false)
+      }).finally(()=>setLoading(false))
+    
   }, []);
   
 useEffect(() => {
@@ -30,7 +30,7 @@ useEffect(() => {
     
     <div className='border-2 border-yellow-300 w-full p-10 bg-[linear-gradient(225deg, #f0f0f0, #cacaca);]'>
       {
-        !loading ? 
+        loading ? 
         <SpinnerCircular size={70} thickness={134} speed={100} color="rgba(57, 160, 172, 1)" secondaryColor="rgba(0, 0, 0, 0.44)" />
         :
           <>
