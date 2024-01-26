@@ -15,7 +15,6 @@ function CourseCard({details , subject , is_admin , provider , purchase}) {
     const [course, setCourse] = useState(details);
     const [modal, setModal] = useState(false);
     const [is_favorite, setIs_favorite] = useState(false);
-    const sub = subject
     const auth = useUrlHeader()
     const navigate = useNavigate()
     const user = useSelector(state => state.user.value)
@@ -84,7 +83,6 @@ function CourseCard({details , subject , is_admin , provider , purchase}) {
         return (
             <>
             <div onClick={() => { 
-                console.log('course open')
                 if(subject === 'enrolled'){
                     return navigate(`/student/courses/${course.id}`)
                 }

@@ -1,1 +1,1 @@
-export const baseUrls = 'http://34.207.159.103/'
+export const baseUrls = 'https://luxeminds-backend.onrender.com/'
