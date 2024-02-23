@@ -29,6 +29,7 @@ function StudProfile() {
     
     const usertest = useSelector(state => state.user.value)
     useEffect(() => {
+        setLoading(true)
         api.get(
             '/student/profile',
         ).then((response) => {
@@ -36,8 +37,8 @@ function StudProfile() {
         })
         .catch((error) => {
             alert('some error has occured')
-        })
-        setLoading(false)
+        }).finally(()=>{setLoading(false)})
+        
     }, [modal]);
 
     useEffect(() => {
@@ -77,8 +78,8 @@ function StudProfile() {
         </div>
         {
             loading ? 
-            <div className='flex w-full h-full justify-center items-center border-2'>
-                <SpinnerDiamond size={70} thickness={84} speed={101} color="rgba(57, 145, 172, 1)" secondaryColor="rgba(0, 0, 0, 1)" />
+            <div className='flex w-full h-full justify-center items-center md:h-[500px] h-[200px] '>
+                <SpinnerDiamond size={70} thickness={84} speed={101} color="rgba(229, 195, 166, 1)" secondaryColor="rgba(0, 0, 0, 1)" />
             </div>
 
             :
@@ -93,7 +94,7 @@ function StudProfile() {
                         <h1 className='text-2xl font-bold'>{user.username}</h1>
                         <p>Full Name : <span className='font-bold capitalize'>{user.first_name} {user.last_name}</span></p>
                         <p>Email : {user.email}</p>
-                        <p>Age : {user.age}</p>
+                        <p>Date of birth : {user.dob}</p>
                         <p>Member since {covertToDate(user.date_joined)}</p>
                     </div>
                     <div className='mt-10 w-full flex justify-end gap-6'>

@@ -8,8 +8,6 @@ function AddReview(props) {
     const [review, setReview] = useState('');
     const auth = useUrlHeader()
     const {course_id , getModal} = props
-
-
     const handleReviewSubmit = (e) => {
         e.preventDefault();
 
@@ -25,7 +23,6 @@ function AddReview(props) {
           review,
           course : course_id
         };
-        console.log(newReview);
         api.post(
           `/student/review-rating/` ,
           newReview,

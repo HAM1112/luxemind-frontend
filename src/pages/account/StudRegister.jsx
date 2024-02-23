@@ -13,24 +13,15 @@ function StudRegister() {
      if (Object.values(Data).some(value => value === "" || value === null)){
         alert("invalid input")
      } else {
-       console.log(Data);
        api.post('/account/studRegister/', Data)
-       .then(function (response) {
-           console.log(response);
-           navigate('/account/login')
-       })
-       .catch(function (error) {
-           console.log(error);
-       });
+       .then(function (response) {navigate('/account/login')})
+       .catch(function (error) {console.log(error);});
       }
       // setData({first_name:"" ,last_name : "", age:"", email:"" , password : "" , username: ""})
   }
   const handleChange = (e) =>{
       setData({ ...Data, [e.target.name]: e.target.value})
   }
-
-
-
 
   return (
     <>

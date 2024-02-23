@@ -50,9 +50,7 @@ function ProfileUpdate(props) {
                     setUser((prev) => ({...prev, avatar : url}))
                     console.log('image uploaded successfully');
                 })
-            }).catch(error => {
-                console.log("snapshot error");
-            })
+            }).catch(error => { console.log("snapshot error") })
             
         setImage(null)
     } 
@@ -74,7 +72,6 @@ function ProfileUpdate(props) {
   return (
 
     <div className='update-card'>
-    {/* {console.log(getTodayMinus5Years())} */}
         <div className='grid gap-3 mb-3 justify-center'>
             <div className=''>
                 <div className='group relative w-56 h-56'>
@@ -92,7 +89,6 @@ function ProfileUpdate(props) {
                     ref={fileInputRef}
                     onChange={(e)=>{
                         setImage(e.target.files[0])
-                        console.log('changed')
                         handleFileUpload()
                     }}/><br />
                     {/* <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>fileInputRef.current.click()}>Upload</button> */}

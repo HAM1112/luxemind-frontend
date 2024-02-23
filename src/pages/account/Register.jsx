@@ -4,6 +4,8 @@ import { NavLink, Outlet } from 'react-router-dom'
 function Register() {
   const [isStud, setIsStud] = useState(true);
   useEffect(() => {
+    localStorage.removeItem("user")
+    localStorage.removeItem("tokens")
   }, [isStud]);
   return (
     <div className='w-96'>

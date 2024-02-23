@@ -1,6 +1,6 @@
 
 import api from '../../api/api';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './login.css'
 import { addUserDetails } from '../../redux/slices/userSlice';
 import { addTokens } from '../../redux/slices/tokenSlice';
@@ -13,6 +13,13 @@ const Login = () =>{
 
     const [Data, setData] = useState({email:"" , password : ""});
     const dispatch = useDispatch()
+
+    // useEffect(() => {
+    //     // localStorage.removeItem("user")
+    //     // localStorage.removeItem("tokens")
+    // }, []);
+
+
 
     const handlleSubmit = () => {
         api.post('/account/token/', Data)

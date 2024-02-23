@@ -20,16 +20,17 @@ function Banner() {
           :
 
 
-    <div className='banner border-2 border-red-600 relative'>
-      <div className='absolute h-full border-2 border-green-600 top-0 right-72'>
-        <img src={discussion} alt="" />
+    <div className='relative'>
+      <div className='lg:absolute h-full top-0 sm:right-10 md:right-28 lg:right-36 xl:right-72 z-'>
+        <img src={discussion} alt="" className='z-10'/>
       </div>
-      <div>
-        <h1 className='text-4xl w-96 border-4'>Unlocking Brilliance, Nurturing Minds: LuxeMinds</h1>
+
+      <div className='z-20 mt-[-200px] lg:mt-2'>
+        <h1 className='text-2xl md:text-4xl w-min-56 sm:w-72 md:w-96 border-4 z-20'>Unlocking Brilliance, Nurturing Minds: LuxeMinds</h1>
       </div>
       
-      <div className='absolute left-64 bottom-40'>
-        <div className='flex w-72 h-10'>
+      <div className='mt-2 sm:mt-10 md:mt-36  left-64 bottom-40'>
+        <div className='flex w-54 h-6 md:w-72 md:h-10'>
           <input type="text" className='border-2 border-slate-700 w-3/4 px-2 outline-none ' name="" id="" />
           <button className='main-button w-1/4'>Search</button>
         </div>

@@ -8,6 +8,8 @@ function Profile() {
     const userDetails = useSelector(state => state.user.value)
     const dispatch = useDispatch()
     const handleLogout = () => {
+        localStorage.removeItem("user")
+        localStorage.removeItem("tokens")
         dispatch(removeTokens())
         dispatch(removeUserDetails())
     }

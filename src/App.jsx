@@ -35,6 +35,7 @@ import Certificates from './pages/students/components/Certificates'
 import PageLayout from './pages/partials/PageLayout'
 import Quiz from './pages/partials/Quiz'
 import PDFCertificate from './pages/students/components/PDFCertificate'
+import PageNotFound from './pages/partials/PageNotFound'
 
 
 
@@ -61,7 +62,6 @@ function App() {
               <Route path='provider' exact element={<ProvRegister />}></Route>
             </Route>
           </Route>
-
           <Route path='/admin' exact element={<CheckAuth from={'admin'}><PageLayout menus={adminMenuItems} /></CheckAuth>}>
             <Route index element={<Navigate to='dashboard' />} ></Route>
             <Route path='dashboard' exact element={<Dashboard />}></Route>
@@ -110,7 +110,7 @@ function App() {
               <Route path='certificates' exact element={<Certificates />}></Route>
             </Route>
           </Route>
-          <Route path='test' exact element={<PDFCertificate />}></Route>
+          <Route path='*' element={<PageNotFound />} />
           
       </Routes>
       <script src="../path/to/flowbite/dist/flowbite.min.js"></script>

@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 
 
 function CheckAuth(props){
-    const user = useSelector(state => state.user.value)
+    const user = localStorage.getItem('user')
     let currentDate = new Date();
     
     if (user !== null) {
