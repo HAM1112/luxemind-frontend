@@ -11,7 +11,7 @@ import {  faChevronDown, faCircleCheck, faCirclePlay } from '@fortawesome/free-s
 function FullCourse() {
   const {course_id} = useParams()
   const navigate = useNavigate()
-  const user = useSelector(state => state.user.value)
+  const user = localStorage.getItem('user')
   const [courseDetails, setCourseDetails] = useState(null);
   const [curriculum, setCurriculum] = useState([]);
   const [p_lessons, setP_lessons] = useState([]);

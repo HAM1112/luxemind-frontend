@@ -6,7 +6,7 @@ import { shuffleArray } from '../../utilities/utils';
 import { studentService } from '../../api/apiService';
 
 function Quiz() {
-    const user = useSelector(state => state.user.value)
+    const user = localStorage.getItem('user')
     const navigate = useNavigate()
     const {course_id } = useParams()
     const [allQuestions, setAllQuestions] = useState([]);

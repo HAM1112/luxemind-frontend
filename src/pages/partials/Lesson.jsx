@@ -15,7 +15,7 @@ function Lesson() {
     const [purchaseLesson, setPurchaseLesson] = useState({});
     const {course_id ,lesson_id} = useParams()
     const [loading, setLoading] = useState(false);
-    const user = useSelector(state => state.user.value)
+    const user = localStorage.getItem('user')
     const auth = useUrlHeader()
     const navigate = useNavigate()
     useEffect(() => {

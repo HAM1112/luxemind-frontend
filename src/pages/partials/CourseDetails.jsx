@@ -25,7 +25,7 @@ const stripePromise = loadStripe('pk_test_51OUSTKSD35HDNE0LxLa3ZdB7RR5jlH2rxFwoy
 
 function CourseDetails(props) {
     const { course_id } = useParams()
-    const user = useSelector(state => state.user.value)
+    const user = localStorage.getItem('user')
     const { is_provider } = props
     const [isDescription, setIsDescription] = useState(true);
     const [course, setCourse] = useState({});
