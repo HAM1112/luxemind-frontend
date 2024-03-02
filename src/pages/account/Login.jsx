@@ -8,12 +8,14 @@ import {  useDispatch } from 'react-redux';
 import { jwtDecode } from "jwt-decode";
 // import { Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = () =>{
 
     const [Data, setData] = useState({email:"" , password : ""});
     const dispatch = useDispatch()
-
+    const navigate = useNavigate()
     // useEffect(() => {
     //     // localStorage.removeItem("user")
     //     // localStorage.removeItem("tokens")
@@ -29,7 +31,8 @@ const Login = () =>{
                 dispatch(addUserDetails(jwtDecode(response.data.access)))
                 localStorage.setItem('user' , response.data.access)
                 localStorage.setItem('tokens' , response.data.refresh)
-                console.log(response.data);
+                // console.log(response.data);
+                navigate('/student/home')
             }
         })
         .catch(function (error) {

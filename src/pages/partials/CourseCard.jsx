@@ -17,7 +17,7 @@ function CourseCard({details , subject , is_admin , provider , purchase}) {
     const [is_favorite, setIs_favorite] = useState(false);
     const auth = useUrlHeader()
     const navigate = useNavigate()
-    const user = useSelector(state => state.user.value)
+    const user = localStorage.getItem('user')
     const [purchaseDetails, setPurchaseDetails] = useState(purchase)
     const getModal = (bool) => {
         setModal(bool)
@@ -127,7 +127,7 @@ function CourseCard({details , subject , is_admin , provider , purchase}) {
                 </div>
             </div>
                     {
-                        !user.is_superuser && !user.is_provider ? 
+                        user && !user.is_superuser && !user.is_provider ? 
                         <>
                             <div className='absolute w-full flex justify-between px-5 bottom-[35px] '>
                                 <p className='bg-gray-300 px-2 py-1 uppercase text-xs'>
